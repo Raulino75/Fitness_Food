@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+{% block titulo %}Fitness Food - Registros de {{ usuario.nombre }}{% endblock %}
+
+{% block contenido %}
+<div class="page-header">
+    <div>
+        <h1 class="page-title">📋 Registros de {{ usuario.nombre }}</h1>
+        <p class="page-sub">
+            Objetivo: 
+            {% if usuario.objetivo == 'perder_peso' %}⚖️ Perder Peso
+            {% elif usuario.objetivo == 'ganar_masa' %}💪 Ganar Masa
+            {% else %}🏃 Mantener Peso{% endif %}
+        </p>
+    </div>
+    <div class="header-actions">
+        {% if session.get('usuario_rol') == 'admin' %}
+        <a href="{{ url_for('lista_usuarios') }}" class="btn btn-outline">← Usuarios</a>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Agregar Registro -->
+<div class="registro-form-card">
+    <h3>Registrar Consumo</h3>
+    <form method="POST" action="{{ url_for('crear_registro') }}">
+        <input type="hidden" name="usuario_id" value="{{ usuario.id }}">
+        <div class="inline-form">
+            <div class="form-group" style="position: relative;">
+                <label class="form-label">Alimento</label>
+                <input type="text" id="alimentoBuscar" name="alimento_nombre" class="form-control" placeholder="Escribe para buscar alimento..." autocomplete="off" required>
+                <input type="hidden" id="alimentoId" name="alimento_id">
+                <div id="sugerenciasAlimentos" class="list-group position-absolute w-100" style="z-index: 10; max-height: 240px; overflow-y: auto;
+                    background: #fff; border: 1px solid #dee2e6; border-radius: .25rem; display: none;"></div>
+            </div>
+            <div class="form-group" style="max-width:180px">
+                <label class="form-label">Gramos</label>
+                <input type="number" name="gramos" class="form-control" placeholder="150" min="1" max="5000" required>
+            </div>
+            <div class="form-group" style="max-width:160px; align-self:flex-end">
+                <button type="submit" class="btn btn-primary w-100">Registrar</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Tabla de registros -->
+{% if registros %}
+{% set total_cals = registros | sum(attribute='calorias') %}
+<div class="stats-row" style="margin-bottom: 1.25rem">
+    <div class="stat-card">
+        <div class="stat-num">{{ registros | length }}</div>
+        <div class="stat-label">Total registros</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-num">{{ "%.0f"|format(total_cals) }}</div>
+        <div class="stat-label">Calorías totales</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-num">{{ "%.0f"|format(total_cals / registros | length) }}</div>
+        <div class="stat-label">Promedio por registro</div>
+    </div>
+</div>
+
+<div class="table-card">
+    <div class="table-responsive">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Alimento</th>
+                    <th>Gramos</th>
+                    <th>Calorías</th>
+                    <th>Fecha</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in registros %}
+                <tr id="fila-{{ r.id }}">
+                    <td class="muted">{{ loop.index }}</td>
+                    <td><strong>{{ r.alimento_nombre }}</strong></td>
+                    <td>{{ "%.0f"|format(r.gramos) }} g</td>
+                    <td><span class="calorie-chip">{{ "%.1f"|format(r.calorias) }} kcal</span></td>
+                    <td class="muted">{{ r.fecha[:16] if r.fecha else '–' }}</td>
+                    <td>
+                       <button type="button" class="btn btn-sm btn-danger-sm eliminar-registro-btn"
+                            data-id="{{ r.id }}">
+                             Eliminar
+                        </button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% else %}
+<div class="empty-state">
+    <div class="empty-icon">🥗</div>
+    <h3>Sin registros todavía</h3>
+    <p class="muted">Usa el formulario de arriba para registrar tu primer consumo.</p>
+</div>
+{% endif %}
+
+<script>
+const alimentosDisponibles = [
+    {% for a in alimentos %}
+    { id: {{ a.id }}, nombre: {{ a.nombre|tojson }}, calorias: {{ a.calorias_por_100g }} },
+    {% endfor %}
+];
+
+function mostrarSugerencias(filtro) {
+    const lista = document.getElementById('sugerenciasAlimentos');
+    const termino = filtro.trim().toLowerCase();
+    if (!termino) {
+        lista.style.display = 'none';
+        lista.innerHTML = '';
+        return;
+    }
+
+    const coincidencias = alimentosDisponibles.filter(a => a.nombre.toLowerCase().includes(termino));
+    if (!coincidencias.length) {
+        lista.style.display = 'block';
+        lista.innerHTML = '<button type="button" class="list-group-item list-group-item-action disabled">No hay coincidencias</button>';
+        return;
+    }
+
+    lista.innerHTML = coincidencias.slice(0, 8).map(a =>
+        `<button type="button" class="list-group-item list-group-item-action suggestion-item" data-id="${a.id}" data-nombre="${a.nombre}">
+            ${a.nombre} (${Math.round(a.calorias)} kcal/100g)
+        </button>`
+    ).join('');
+    lista.style.display = 'block';
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const inputAlimento = document.getElementById('alimentoBuscar');
+    const inputId = document.getElementById('alimentoId');
+    const sugerencias = document.getElementById('sugerenciasAlimentos');
+
+    inputAlimento.addEventListener('input', function() {
+        inputId.value = '';
+        mostrarSugerencias(this.value);
+    });
+
+    sugerencias.addEventListener('click', function(event) {
+        const item = event.target.closest('.suggestion-item');
+        if (!item) return;
+        inputAlimento.value = item.dataset.nombre;
+        inputId.value = item.dataset.id;
+        sugerencias.innerHTML = '';
+        sugerencias.style.display = 'none';
+    });
+
+    inputAlimento.addEventListener('blur', function() {
+        setTimeout(() => {
+            sugerencias.style.display = 'none';
+        }, 150);
+    });
+
+    if (inputAlimento.form) {
+        inputAlimento.form.addEventListener('submit', function(event) {
+            if (!inputId.value.trim()) {
+                const texto = inputAlimento.value.trim().toLowerCase();
+                const exacto = alimentosDisponibles.find(a => a.nombre.toLowerCase() === texto);
+                if (exacto) {
+                    inputId.value = exacto.id;
+                    return;
+                }
+                event.preventDefault();
+                alert('Por favor selecciona un alimento válido de la lista.');
+            }
+        });
+    }
+});
+
+async function eliminarRegistro(id) {
+    if (!confirm('¿Eliminar este registro?')) return;
+    const res = await fetch(`/registro/${id}`, { method: 'DELETE' });
+    if (res.ok) {
+        document.getElementById(`fila-${id}`)?.remove();
+    } else {
+        alert('Error al eliminar el registro.');
+    }
+}
+</script>
+{% endblock %}

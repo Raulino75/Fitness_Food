@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block titulo %}Fitness Food - Registro{% endblock %}
+{% block sin_nav %}{% endblock %}
+
+{% block contenido %}
+<div class="auth-wrapper">
+    <div class="auth-card" style="max-width:520px">
+        <div class="auth-logo">
+            <span class="logo-icon">🥗</span>
+            <h1 class="logo-text">Fitness Food</h1>
+        </div>
+
+        <h2 class="auth-title">Crear Cuenta</h2>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ 'success' if category == 'success' else 'danger' if category == 'danger' else 'info' }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('registro') }}" novalidate>
+            <div class="form-group">
+                <label class="form-label">Nombre completo</label>
+                <input type="text" name="nombre" class="form-control"
+                       value="{{ nombre or '' }}" placeholder="Tu nombre" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Correo Electrónico</label>
+                <input type="email" name="email" class="form-control"
+                       value="{{ email or '' }}" placeholder="correo@ejemplo.com" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Contraseña</label>
+                <div class="input-pass-wrap">
+                    <input type="password" id="password" name="password" class="form-control"
+                           placeholder="Mín. 8 chars, 1 mayúscula, 1 número" required>
+                    <button type="button" class="toggle-pass" onclick="togglePass('password', this)">👁</button>
+                </div>
+                <div class="pass-strength" id="passStrength"></div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Confirmar Contraseña</label>
+                <div class="input-pass-wrap">
+                    <input type="password" id="confirmar" name="confirmar" class="form-control"
+                           placeholder="Repite la contraseña" required>
+                    <button type="button" class="toggle-pass" onclick="togglePass('confirmar', this)">👁</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Objetivo Fitness</label>
+                <select name="objetivo" class="form-control">
+                    <option value="mantener" {% if objetivo=='mantener' %}selected{% endif %}>🏃 Mantener Peso</option>
+                    <option value="perder_peso" {% if objetivo=='perder_peso' %}selected{% endif %}>⚖️ Perder Peso</option>
+                    <option value="ganar_masa" {% if objetivo=='ganar_masa' %}selected{% endif %}>💪 Ganar Masa</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Crear Cuenta</button>
+        </form>
+
+        <p class="auth-switch">
+            ¿Ya tienes cuenta? <a href="{{ url_for('login') }}">Inicia sesión</a>
+        </p>
+    </div>
+</div>
+
+<script>
+function togglePass(id, btn) {
+    const inp = document.getElementById(id);
+    inp.type = inp.type === 'password' ? 'text' : 'password';
+    btn.textContent = inp.type === 'password' ? '👁' : '🙈';
+}
+const pw = document.getElementById('password');
+const bar = document.getElementById('passStrength');
+if (pw && bar) {
+    pw.addEventListener('input', () => {
+        const v = pw.value;
+        let score = 0;
+        if (v.length >= 8) score++;
+        if (/[A-Z]/.test(v)) score++;
+        if (/\d/.test(v)) score++;
+        if (/[^A-Za-z0-9]/.test(v)) score++;
+        const labels = ['','Débil','Regular','Buena','Fuerte'];
+        const colors = ['','#e53e3e','#dd6b20','#d69e2e','#38a169'];
+        bar.textContent = labels[score] || '';
+        bar.style.color = colors[score] || '';
+    });
+}
+</script>
+{% endblock %}

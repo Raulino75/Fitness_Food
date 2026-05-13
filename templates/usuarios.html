@@ -1,0 +1,211 @@
+{% extends "base.html" %}
+{% block titulo %}Fitness Food - Usuarios{% endblock %}
+
+{% block contenido %}
+<div class="page-header">
+    <div>
+        <h1 class="page-title">👥 Gestión de Usuarios</h1>
+        <p class="page-sub">Panel exclusivo para administradores</p>
+    </div>
+    <div class="header-actions">
+       {% if session.get('usuario_rol') == 'admin' %}
+<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalNuevoUsuario">
+    + Nuevo Usuario
+</button>
+{% endif %}
+    </div>
+</div>
+
+<!-- Stats -->
+<div class="stats-row">
+    <div class="stat-card">
+        <div class="stat-num">{{ usuarios|length }}</div>
+        <div class="stat-label">Total Usuarios</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-num">{{ usuarios|selectattr("rol", "equalto", "admin")|list|length }}</div>
+        <div class="stat-label">Administradores</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-num">{{ usuarios|selectattr("rol", "equalto", "cliente")|list|length }}</div>
+        <div class="stat-label">Clientes</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-num">{{ usuarios|selectattr("activo", "equalto", 1)|list|length }}</div>
+        <div class="stat-label">Activos</div>
+    </div>
+</div>
+
+{% if usuarios %}
+<div class="table-card">
+    <div class="table-responsive">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Rol</th>
+                    <th>Objetivo</th>
+                    <th>Estado</th>
+                    <th>Registrado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for u in usuarios %}
+                <tr>
+                    <td class="muted">{{ loop.index }}</td>
+                    <td><strong>{{ u.nombre }}</strong></td>
+                    <td class="muted">{{ u.email }}</td>
+                    <td>
+                        <span class="badge {{ 'badge-admin' if u.rol == 'admin' else 'badge-cliente' }}">
+                            {{ '🔑 Admin' if u.rol == 'admin' else '👤 Cliente' }}
+                        </span>
+                    </td>
+                    <td>
+                        {% if u.objetivo == 'perder_peso' %}⚖️ Perder Peso
+                        {% elif u.objetivo == 'ganar_masa' %}💪 Ganar Masa
+                        {% else %}🏃 Mantener{% endif %}
+                    </td>
+                    <td>
+                        <span class="badge {{ 'badge-activo' if u.activo else 'badge-inactivo' }}">
+                            {{ '✓ Activo' if u.activo else '✗ Inactivo' }}
+                        </span>
+                    </td>
+                    <td class="muted">{{ u.fecha_creacion[:10] if u.fecha_creacion else '–' }}</td>
+                    <td class="actions-cell">
+                        <a href="{{ url_for('registros_usuario', usuario_id=u.id) }}" class="btn btn-sm btn-outline">Ver Registros</a>
+                        <button class="btn btn-sm btn-outline editar-btn"
+                            data-id="{{ u.id }}"
+                            data-rol="{{ u.rol }}"
+                            data-objetivo="{{ u.objetivo }}"
+                            data-activo="{{ u.activo }}">
+                            Editar
+                        </button>
+                        {% if u.id != session.get('usuario_id') %}
+                        <form method="POST" action="{{ url_for('eliminar_usuario') }}" style="display:inline"
+                              onsubmit="return confirm('¿Eliminar a {{ u.nombre }}? Esta acción es irreversible.')">
+                            <input type="hidden" name="usuario_id" value="{{ u.id }}">
+                            <button type="submit" class="btn btn-sm btn-danger-sm">Eliminar</button>
+                        </form>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% else %}
+<div class="empty-state">
+    <div class="empty-icon">👤</div>
+    <h3>Sin usuarios registrados</h3>
+    {% if session.get('usuario_rol') == 'admin' %}
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalNuevoUsuario">Crear Primer Usuario</button>
+    {% endif %}
+</div>
+{% endif %}
+
+<!-- Modal Nuevo Usuario -->
+<div class="modal fade" id="modalNuevoUsuario" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content modal-custom">
+            <div class="modal-header">
+                <h5 class="modal-title">Nuevo Usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form method="POST" action="{{ url_for('crear_usuario') }}">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="form-label">Nombre completo</label>
+                        <input type="text" name="nombre" class="form-control" required placeholder="Nombre">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" name="email" class="form-control" required placeholder="email@ejemplo.com">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Contraseña temporal</label>
+                        <input type="password" name="password" class="form-control" required placeholder="Mín. 8 caracteres">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Rol</label>
+                        <select name="rol" class="form-control">
+                            <option value="cliente">👤 Cliente</option>
+                            <option value="admin">🔑 Administrador</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Objetivo Fitness</label>
+                        <select name="objetivo" class="form-control">
+                            <option value="mantener">🏃 Mantener Peso</option>
+                            <option value="perder_peso">⚖️ Perder Peso</option>
+                            <option value="ganar_masa">💪 Ganar Masa</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Crear Usuario</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Editar Usuario -->
+<div class="modal fade" id="modalEditar" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content modal-custom">
+            <div class="modal-header">
+                <h5 class="modal-title">Editar Usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form method="POST" id="formEditar">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="form-label">Rol</label>
+                        <select name="rol" id="editRol" class="form-control">
+                            <option value="cliente">👤 Cliente</option>
+                            <option value="admin">🔑 Administrador</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Objetivo Fitness</label>
+                        <select name="objetivo" id="editObjetivo" class="form-control">
+                            <option value="mantener">🏃 Mantener Peso</option>
+                            <option value="perder_peso">⚖️ Perder Peso</option>
+                            <option value="ganar_masa">💪 Ganar Masa</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Estado</label>
+                        <select name="activo" id="editActivo" class="form-control">
+                            <option value="1">✓ Activo</option>
+                            <option value="0">✗ Inactivo</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('editar-btn')) {
+        const d = e.target.dataset;
+        document.getElementById('formEditar').action = `/editar-usuario/${d.id}`;
+        document.getElementById('editRol').value = d.rol;
+        document.getElementById('editObjetivo').value = d.objetivo;
+        document.getElementById('editActivo').value = d.activo;
+        new bootstrap.Modal(document.getElementById('modalEditar')).show();
+    }
+});
+</script>
+{% endblock %}

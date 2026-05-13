@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block titulo %}Fitness Food - Alimentos{% endblock %}
+
+{% block contenido %}
+<div class="page-header">
+    <div>
+        <h1 class="page-title">🍎 Base de Datos de Alimentos</h1>
+        <p class="page-sub">{{ alimentos | length }} alimentos registrados</p>
+    </div>
+    <div class="alimentos-header" style="margin-bottom: 0">
+        <input type="search" id="buscador" class="search-input" placeholder="🔍 Buscar alimento...">
+        {% if session.get('usuario_rol') == 'admin' %}
+        <button class="btn btn-outline" onclick="recargarAlimentos()">↺ Recargar JSON</button>
+        {% endif %}
+    </div>
+</div>
+
+{% if alimentos %}
+<div class="stats-row">
+    <div class="stat-card">
+        <div class="stat-num">{{ alimentos | length }}</div>
+        <div class="stat-label">Total</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-num">{{ "%.0f"|format(alimentos | map(attribute='calorias_por_100g') | min) }}</div>
+        <div class="stat-label">Mín. kcal/100g</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-num">{{ "%.0f"|format(alimentos | map(attribute='calorias_por_100g') | max) }}</div>
+        <div class="stat-label">Máx. kcal/100g</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-num">{{ "%.0f"|format((alimentos | map(attribute='calorias_por_100g') | sum) / (alimentos | length)) }}</div>
+        <div class="stat-label">Promedio</div>
+    </div>
+</div>
+
+<div class="table-card">
+    <div class="table-responsive">
+        <table class="data-table" id="tablaAlimentos">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Alimento</th>
+                    <th>Categoría</th>
+                    <th>Calorías/100g</th>
+                    <th>Nivel</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for a in alimentos %}
+                <tr class="alimento-row">
+                    <td class="muted">{{ loop.index }}</td>
+                    <td><strong class="alimento-nombre">{{ a.nombre }}</strong></td>
+                    <td class="muted" style="font-size:.82rem; text-transform:capitalize">{{ (a.categoria or 'general').replace('_', ' ') }}</td>
+                    <td><span class="calorie-chip">{{ "%.1f"|format(a.calorias_por_100g) }} kcal</span></td>
+                    <td>
+                        {% if a.calorias_por_100g < 50 %}
+                            <span class="badge badge-activo">Muy Bajo</span>
+                        {% elif a.calorias_por_100g < 150 %}
+                            <span class="badge badge-cliente">Bajo</span>
+                        {% elif a.calorias_por_100g < 300 %}
+                            <span class="badge badge-admin">Moderado</span>
+                        {% else %}
+                            <span class="badge" style="background:var(--red-lt);color:var(--red)">Alto</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+
+<script>
+document.getElementById('buscador').addEventListener('input', function() {
+    const term = this.value.toLowerCase();
+    document.querySelectorAll('.alimento-row').forEach(row => {
+        const nombre = row.querySelector('.alimento-nombre').textContent.toLowerCase();
+        row.style.display = nombre.includes(term) ? '' : 'none';
+    });
+});
+
+async function recargarAlimentos() {
+    const res = await fetch('/api/cargar-alimentos-json', { method: 'POST' });
+    const data = await res.json();
+    alert(data.mensaje || data.error);
+    if (res.ok) location.reload();
+}
+</script>
+{% endblock %}

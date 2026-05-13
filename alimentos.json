@@ -1,0 +1,187 @@
+{
+  "alimentos": [
+    { "nombre": "Arroz integral", "calorias_por_100g": 111.0, "categoria": "cereales" },
+    { "nombre": "Pollo a la plancha", "calorias_por_100g": 165.0, "categoria": "proteinas" },
+    { "nombre": "Manzana", "calorias_por_100g": 52.0, "categoria": "frutas" },
+    { "nombre": "Brócoli", "calorias_por_100g": 25.0, "categoria": "verduras" },
+    { "nombre": "Salmón", "calorias_por_100g": 206.0, "categoria": "proteinas" },
+    { "nombre": "Avena", "calorias_por_100g": 389.0, "categoria": "cereales" },
+    { "nombre": "Espinacas", "calorias_por_100g": 23.0, "categoria": "verduras" },
+    { "nombre": "Huevo", "calorias_por_100g": 155.0, "categoria": "proteinas" },
+    { "nombre": "Plátano", "calorias_por_100g": 89.0, "categoria": "frutas" },
+    { "nombre": "Quinoa", "calorias_por_100g": 120.0, "categoria": "cereales" },
+    { "nombre": "Pechuga de pavo", "calorias_por_100g": 135.0, "categoria": "proteinas" },
+    { "nombre": "Yogur natural", "calorias_por_100g": 61.0, "categoria": "lacteos" },
+    { "nombre": "Almendras", "calorias_por_100g": 579.0, "categoria": "frutos_secos" },
+    { "nombre": "Zanahoria", "calorias_por_100g": 41.0, "categoria": "verduras" },
+    { "nombre": "Naranja", "calorias_por_100g": 47.0, "categoria": "frutas" },
+    { "nombre": "Atún en agua", "calorias_por_100g": 144.0, "categoria": "proteinas" },
+    { "nombre": "Arroz blanco", "calorias_por_100g": 130.0, "categoria": "cereales" },
+    { "nombre": "Lentejas", "calorias_por_100g": 116.0, "categoria": "legumbres" },
+    { "nombre": "Tomate", "calorias_por_100g": 18.0, "categoria": "verduras" },
+    { "nombre": "Aguacate", "calorias_por_100g": 160.0, "categoria": "frutas" },
+    { "nombre": "Pan integral", "calorias_por_100g": 247.0, "categoria": "cereales" },
+    { "nombre": "Leche desnatada", "calorias_por_100g": 34.0, "categoria": "lacteos" },
+    { "nombre": "Garbanzos", "calorias_por_100g": 164.0, "categoria": "legumbres" },
+    { "nombre": "Lechuga", "calorias_por_100g": 14.0, "categoria": "verduras" },
+    { "nombre": "Fresas", "calorias_por_100g": 32.0, "categoria": "frutas" },
+    { "nombre": "Pasta integral", "calorias_por_100g": 124.0, "categoria": "cereales" },
+    { "nombre": "Queso fresco", "calorias_por_100g": 174.0, "categoria": "lacteos" },
+    { "nombre": "Nueces", "calorias_por_100g": 654.0, "categoria": "frutos_secos" },
+    { "nombre": "Pepino", "calorias_por_100g": 16.0, "categoria": "verduras" },
+    { "nombre": "Kiwi", "calorias_por_100g": 61.0, "categoria": "frutas" },
+
+    { "nombre": "Carne de res", "calorias_por_100g": 250.0, "categoria": "proteinas" },
+    { "nombre": "Cerdo", "calorias_por_100g": 242.0, "categoria": "proteinas" },
+    { "nombre": "Tilapia", "calorias_por_100g": 129.0, "categoria": "proteinas" },
+    { "nombre": "Sardinas", "calorias_por_100g": 208.0, "categoria": "proteinas" },
+    { "nombre": "Tofu", "calorias_por_100g": 76.0, "categoria": "proteinas" },
+
+    { "nombre": "Papa", "calorias_por_100g": 77.0, "categoria": "verduras" },
+    { "nombre": "Yuca", "calorias_por_100g": 160.0, "categoria": "verduras" },
+    { "nombre": "Maíz", "calorias_por_100g": 96.0, "categoria": "cereales" },
+    { "nombre": "Batata", "calorias_por_100g": 86.0, "categoria": "verduras" },
+
+    { "nombre": "Pera", "calorias_por_100g": 57.0, "categoria": "frutas" },
+    { "nombre": "Mango", "calorias_por_100g": 60.0, "categoria": "frutas" },
+    { "nombre": "Piña", "calorias_por_100g": 50.0, "categoria": "frutas" },
+    { "nombre": "Sandía", "calorias_por_100g": 30.0, "categoria": "frutas" },
+    { "nombre": "Melón", "calorias_por_100g": 34.0, "categoria": "frutas" },
+
+    { "nombre": "Frijoles", "calorias_por_100g": 127.0, "categoria": "legumbres" },
+    { "nombre": "Habichuelas", "calorias_por_100g": 120.0, "categoria": "legumbres" },
+
+    { "nombre": "Mantequilla", "calorias_por_100g": 717.0, "categoria": "grasas" },
+    { "nombre": "Aceite de oliva", "calorias_por_100g": 884.0, "categoria": "grasas" },
+    { "nombre": "Mayonesa", "calorias_por_100g": 680.0, "categoria": "grasas" },
+
+    { "nombre": "Chocolate oscuro", "calorias_por_100g": 546.0, "categoria": "dulces" },
+    { "nombre": "Galletas", "calorias_por_100g": 502.0, "categoria": "dulces" },
+    { "nombre": "Helado", "calorias_por_100g": 207.0, "categoria": "dulces" },
+
+    { "nombre": "Café", "calorias_por_100g": 1.0, "categoria": "bebidas" },
+    { "nombre": "Té", "calorias_por_100g": 1.0, "categoria": "bebidas" },
+    { "nombre": "Jugo de naranja", "calorias_por_100g": 45.0, "categoria": "bebidas" },
+    { "nombre": "Gaseosa", "calorias_por_100g": 42.0, "categoria": "bebidas" },
+
+    { "nombre": "Pan blanco", "calorias_por_100g": 265.0, "categoria": "cereales" },
+    { "nombre": "Cereal de maíz", "calorias_por_100g": 357.0, "categoria": "cereales" },
+
+    { "nombre": "Queso cheddar", "calorias_por_100g": 403.0, "categoria": "lacteos" },
+    { "nombre": "Queso mozzarella", "calorias_por_100g": 280.0, "categoria": "lacteos" },
+    { "nombre": "Leche entera", "calorias_por_100g": 61.0, "categoria": "lacteos" },
+
+    { "nombre": "Coco", "calorias_por_100g": 354.0, "categoria": "frutas" },
+    { "nombre": "Uvas", "calorias_por_100g": 69.0, "categoria": "frutas" },
+    { "nombre": "Ciruelas", "calorias_por_100g": 46.0, "categoria": "frutas" },
+
+    { "nombre": "Champiñones", "calorias_por_100g": 22.0, "categoria": "verduras" },
+    { "nombre": "Berenjena", "calorias_por_100g": 25.0, "categoria": "verduras" },
+    { "nombre": "Calabacín", "calorias_por_100g": 17.0, "categoria": "verduras" },
+
+    { "nombre": "Maní", "calorias_por_100g": 567.0, "categoria": "frutos_secos" },
+    { "nombre": "Pistachos", "calorias_por_100g": 562.0, "categoria": "frutos_secos" },
+    { "nombre": "Avellanas", "calorias_por_100g": 628.0, "categoria": "frutos_secos" },
+
+    { "nombre": "Pizza", "calorias_por_100g": 266.0, "categoria": "comida_rapida" },
+    { "nombre": "Hamburguesa", "calorias_por_100g": 295.0, "categoria": "comida_rapida" },
+    { "nombre": "Papas fritas", "calorias_por_100g": 312.0, "categoria": "comida_rapida" },
+
+    { "nombre": "Arepa", "calorias_por_100g": 218.0, "categoria": "cereales" },
+    { "nombre": "Empanada", "calorias_por_100g": 300.0, "categoria": "comida_rapida" },
+    { "nombre": "Tamal", "calorias_por_100g": 230.0, "categoria": "comida_tradicional" },
+
+    { "nombre": "Chorizo", "calorias_por_100g": 455.0, "categoria": "proteinas" },
+    { "nombre": "Jamón", "calorias_por_100g": 145.0, "categoria": "proteinas" },
+
+    { "nombre": "Miel", "calorias_por_100g": 304.0, "categoria": "dulces" },
+    { "nombre": "Azúcar", "calorias_por_100g": 387.0, "categoria": "dulces" },
+
+    { "nombre": "Sopa de verduras", "calorias_por_100g": 40.0, "categoria": "preparados" },
+    { "nombre": "Caldo de pollo", "calorias_por_100g": 50.0, "categoria": "preparados" },
+
+    { "nombre": "Ensalada mixta", "calorias_por_100g": 35.0, "categoria": "verduras" },
+    { "nombre": "Ensalada de frutas", "calorias_por_100g": 60.0, "categoria": "frutas" },
+
+    { "nombre": "Hot dog", "calorias_por_100g": 290.0, "categoria": "comida_rapida" },
+    { "nombre": "Donut", "calorias_por_100g": 452.0, "categoria": "dulces" },
+
+    { "nombre": "Refresco light", "calorias_por_100g": 1.0, "categoria": "bebidas" },
+    { "nombre": "Agua", "calorias_por_100g": 0.0, "categoria": "bebidas" },
+
+    { "nombre": "Granola", "calorias_por_100g": 471.0, "categoria": "cereales" },
+    { "nombre": "Barra energética", "calorias_por_100g": 350.0, "categoria": "snacks" },
+
+    { "nombre": "Sushi", "calorias_por_100g": 130.0, "categoria": "comida_internacional" },
+    { "nombre": "Pasta blanca", "calorias_por_100g": 131.0, "categoria": "cereales" },
+
+    { "nombre": "Lasagna", "calorias_por_100g": 135.0, "categoria": "comida_preparada" },
+    { "nombre": "Arroz con pollo", "calorias_por_100g": 150.0, "categoria": "comida_tradicional" },
+
+    { "nombre": "Camarones", "calorias_por_100g": 99.0, "categoria": "proteinas" },
+    { "nombre": "Langosta", "calorias_por_100g": 89.0, "categoria": "proteinas" },
+    { "nombre": "Pulpo", "calorias_por_100g": 82.0, "categoria": "proteinas" },
+    { "nombre": "Calamar", "calorias_por_100g": 92.0, "categoria": "proteinas" },
+
+    { "nombre": "Repollo", "calorias_por_100g": 25.0, "categoria": "verduras" },
+    { "nombre": "Coliflor", "calorias_por_100g": 25.0, "categoria": "verduras" },
+    { "nombre": "Remolacha", "calorias_por_100g": 43.0, "categoria": "verduras" },
+    { "nombre": "Apio", "calorias_por_100g": 16.0, "categoria": "verduras" },
+    { "nombre": "Pimentón", "calorias_por_100g": 31.0, "categoria": "verduras" },
+
+    { "nombre": "Mandarina", "calorias_por_100g": 53.0, "categoria": "frutas" },
+    { "nombre": "Guayaba", "calorias_por_100g": 68.0, "categoria": "frutas" },
+    { "nombre": "Maracuyá", "calorias_por_100g": 97.0, "categoria": "frutas" },
+    { "nombre": "Papaya", "calorias_por_100g": 43.0, "categoria": "frutas" },
+    { "nombre": "Granadilla", "calorias_por_100g": 97.0, "categoria": "frutas" },
+
+    { "nombre": "Cuscús", "calorias_por_100g": 112.0, "categoria": "cereales" },
+    { "nombre": "Harina de trigo", "calorias_por_100g": 364.0, "categoria": "cereales" },
+    { "nombre": "Harina de maíz", "calorias_por_100g": 365.0, "categoria": "cereales" },
+
+    { "nombre": "Leche de almendras", "calorias_por_100g": 17.0, "categoria": "bebidas" },
+    { "nombre": "Leche de soya", "calorias_por_100g": 54.0, "categoria": "bebidas" },
+    { "nombre": "Batido de proteínas", "calorias_por_100g": 120.0, "categoria": "bebidas" },
+
+    { "nombre": "Margarina", "calorias_por_100g": 717.0, "categoria": "grasas" },
+    { "nombre": "Aceite de coco", "calorias_por_100g": 862.0, "categoria": "grasas" },
+
+    { "nombre": "Brownie", "calorias_por_100g": 466.0, "categoria": "dulces" },
+    { "nombre": "Pastel de chocolate", "calorias_por_100g": 371.0, "categoria": "dulces" },
+    { "nombre": "Gelatina", "calorias_por_100g": 62.0, "categoria": "dulces" },
+
+    { "nombre": "Croissant", "calorias_por_100g": 406.0, "categoria": "cereales" },
+    { "nombre": "Pan de centeno", "calorias_por_100g": 259.0, "categoria": "cereales" },
+
+    { "nombre": "Queso parmesano", "calorias_por_100g": 431.0, "categoria": "lacteos" },
+    { "nombre": "Yogur griego", "calorias_por_100g": 59.0, "categoria": "lacteos" },
+
+    { "nombre": "Cerveza", "calorias_por_100g": 43.0, "categoria": "bebidas" },
+    { "nombre": "Vino tinto", "calorias_por_100g": 85.0, "categoria": "bebidas" },
+
+    { "nombre": "Nachos", "calorias_por_100g": 346.0, "categoria": "snacks" },
+    { "nombre": "Palomitas de maíz", "calorias_por_100g": 375.0, "categoria": "snacks" },
+    { "nombre": "Chips de papa", "calorias_por_100g": 536.0, "categoria": "snacks" },
+
+    { "nombre": "Sándwich", "calorias_por_100g": 250.0, "categoria": "comida_preparada" },
+    { "nombre": "Wrap", "calorias_por_100g": 210.0, "categoria": "comida_preparada" },
+
+    { "nombre": "Paella", "calorias_por_100g": 158.0, "categoria": "comida_internacional" },
+    { "nombre": "Tacos", "calorias_por_100g": 226.0, "categoria": "comida_internacional" },
+
+    { "nombre": "Arroz frito", "calorias_por_100g": 163.0, "categoria": "comida_preparada" },
+    { "nombre": "Pollo frito", "calorias_por_100g": 246.0, "categoria": "comida_rapida" },
+
+    { "nombre": "Sopa instantánea", "calorias_por_100g": 450.0, "categoria": "preparados" },
+    { "nombre": "Purée de papa", "calorias_por_100g": 88.0, "categoria": "preparados" },
+
+    { "nombre": "Choclo", "calorias_por_100g": 96.0, "categoria": "cereales" },
+    { "nombre": "Quinua inflada", "calorias_por_100g": 368.0, "categoria": "cereales" },
+
+    { "nombre": "Hummus", "calorias_por_100g": 166.0, "categoria": "legumbres" },
+    { "nombre": "Falafel", "calorias_por_100g": 333.0, "categoria": "legumbres" },
+
+    { "nombre": "Tortilla de maíz", "calorias_por_100g": 218.0, "categoria": "cereales" },
+    { "nombre": "Tortilla española", "calorias_por_100g": 196.0, "categoria": "comida_preparada" }
+  ]
+}

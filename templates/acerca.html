@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block titulo %}Fitness Food - Acerca de{% endblock %}
+
+{% block contenido %}
+<div class="page-header">
+    <div>
+        <h1 class="page-title">ℹ️ Acerca de Fitness Food</h1>
+        <p class="page-sub">Tu compañero para una alimentación saludable</p>
+    </div>
+</div>
+
+<div class="table-card" style="padding: 2rem; max-width: 700px">
+    <h2 style="font-family:var(--font-display); color:var(--green); margin-bottom:1rem">Nuestra Misión</h2>
+    <p style="color:var(--gray-600); line-height:1.7">
+        En Fitness Food creemos que una alimentación saludable es la base para una vida plena. 
+        Nuestra misión es darte las herramientas para transformar tu relación con la comida, 
+        con seguimiento de calorías, base de alimentos y objetivos personalizados.
+    </p>
+
+    <h3 style="font-family:var(--font-display); margin:1.5rem 0 .75rem">🔐 Seguridad del Sistema</h3>
+    <ul style="color:var(--gray-600); line-height:2; padding-left:1.2rem">
+        <li>Contraseñas almacenadas con <strong>bcrypt / Werkzeug hashing</strong></li>
+        <li>Sesiones protegidas con <strong>JWT (HS256)</strong> — expiración de 8 h</li>
+        <li>Roles y Permisos <strong>RBAC</strong>: Admin y Cliente</li>
+        <li>Protección de rutas con decoradores <code>@login_requerido</code> y <code>@solo_admin</code></li>
+        <li>Validación de entradas en registro y login</li>
+    </ul>
+
+    <h3 style="font-family:var(--font-display); margin:1.5rem 0 .75rem">🛠️ Tecnologías</h3>
+    <ul style="color:var(--gray-600); line-height:2; padding-left:1.2rem">
+        <li>Flask 3 · SQLite3 · Jinja2</li>
+        <li>PyJWT · Werkzeug Security</li>
+        <li>Bootstrap 5 · DM Sans · Fraunces</li>
+    </ul>
+
+    <a href="{{ url_for('inicio') }}" class="btn btn-primary" style="margin-top:1.5rem">← Volver al Inicio</a>
+</div>
+{% endblock %}

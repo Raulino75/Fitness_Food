@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block titulo %}Fitness Food{% endblock %}
+
+{% block contenido %}
+{% if session.get('usuario_rol') == 'admin' %}
+<div class="page-header">
+    <div>
+        <h1 class="page-title">� Panel Administrativo</h1>
+        <p class="page-sub">Resumen rápido y accesos directos para administradores</p>
+    </div>
+</div>
+
+<div class="stats-row">
+    <div class="stat-card">
+        <div class="stat-num">{{ estadisticas.usuarios }}</div>
+        <div class="stat-label">Usuarios activos</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-num">{{ estadisticas.alimentos }}</div>
+        <div class="stat-label">Alimentos registrados</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-num">{{ estadisticas.registros }}</div>
+        <div class="stat-label">Registros totales</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-num">{{ estadisticas.calorias }}</div>
+        <div class="stat-label">Calorías totales</div>
+    </div>
+</div>
+
+<div class="card card-simple">
+    <div class="card-body">
+        <h3>Acciones rápidas</h3>
+        <p>Accede directamente a las áreas de gestión y a tus registros.</p>
+        <div style="display:flex; flex-wrap:wrap; gap:0.75rem; margin-top:1rem;">
+            <a href="{{ url_for('lista_usuarios') }}" class="btn btn-primary">Gestionar usuarios</a>
+            <a href="{{ url_for('lista_alimentos_web') }}" class="btn btn-outline">Ver alimentos</a>
+            <a href="{{ url_for('registros_usuario', usuario_id=session.get('usuario_id')) }}" class="btn btn-outline">Mis registros</a>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="page-header">
+    <div>
+        <h1 class="page-title">👋 Bienvenido, {{ session.get('usuario_nombre') }}</h1>
+        <p class="page-sub">Este es tu panel personal de seguimiento.</p>
+    </div>
+</div>
+
+<div class="stats-row">
+    <div class="stat-card">
+        <div class="stat-num">{{ estadisticas.registros }}</div>
+        <div class="stat-label">Registros totales</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-num">{{ estadisticas.calorias }}</div>
+        <div class="stat-label">Calorías consumidas</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-num">{{ estadisticas.calorias_hoy }}</div>
+        <div class="stat-label">Calorías hoy</div>
+    </div>
+</div>
+
+<div class="card card-simple">
+    <div class="card-body">
+        <h3>Tu progreso</h3>
+        <p>Accede a tus registros personales, agrega consumos y sigue tu objetivo de forma segura.</p>
+        <a href="{{ url_for('registros_usuario', usuario_id=session.get('usuario_id')) }}" class="btn btn-primary">Ver mis registros</a>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
